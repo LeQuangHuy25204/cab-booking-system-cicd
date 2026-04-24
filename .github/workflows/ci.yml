@@ -62,7 +62,11 @@ jobs:
         run: npm ci
 
       - name: Start development stack
-        run: docker compose --profile development up -d
+        run: |
+          docker compose --profile development up -d \
+            postgres mongodb redis rabbitmq \
+            auth-service booking-service driver-service pricing-service payment-service notification-service eta-service matching-service \
+            ride-service realtime-socket
 
       - name: Run level1 smoke
         run: npm run smoke:level1
