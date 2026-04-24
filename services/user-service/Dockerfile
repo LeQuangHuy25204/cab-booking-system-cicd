@@ -10,25 +10,22 @@ RUN apk add --no-cache \
     redis \
     && rm -rf /var/cache/apk/*
 
-# Copy shared package used by file dependency @cab-booking/shared
-COPY shared/ /shared/
-
-# Copy package files from service directory
-COPY services/user-service/package*.json ./
+# Copy package files
+COPY package*.json ./
 
 # Install dependencies
 RUN npm ci --omit=dev && npm cache clean --force
 
-# Copy source code from service directory
-COPY services/user-service/src/ ./src/
-COPY services/user-service/index.js ./
+# Copy source code
+COPY src/ ./src/
+COPY index.js ./
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001
 
 # Change ownership of app directory
-RUN chown -R nextjs:nodejs /app /shared
+RUN chown -R nextjs:nodejs /app
 USER nextjs
 
 # Expose port

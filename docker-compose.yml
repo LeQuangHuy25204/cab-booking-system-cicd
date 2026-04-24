@@ -170,8 +170,8 @@ services:
   # User Service
   user-service:
     build:
-      context: .
-      dockerfile: services/user-service/Dockerfile
+      context: ./services/user-service
+      dockerfile: ${DOCKERFILE:-Dockerfile}
     container_name: cab-booking-user-service
     ports:
       - "3005:3005"
