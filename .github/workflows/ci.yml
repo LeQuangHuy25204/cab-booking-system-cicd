@@ -41,4 +41,4 @@ jobs:
         uses: azure/setup-kubectl@v4
 
       - name: Validate Kubernetes manifests
-        run: kubectl kustomize k8s/base > /tmp/cab-booking-k8s.yaml
+        run: kubectl kustomize --load-restrictor=LoadRestrictionsNone k8s/base > /tmp/cab-booking-k8s.yaml
