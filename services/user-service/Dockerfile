@@ -17,7 +17,7 @@ COPY shared/ /shared/
 COPY services/user-service/package.json services/user-service/package-lock.json ./
 
 # Install dependencies
-RUN npm ci --omit=dev && npm cache clean --force
+RUN npm install --omit=dev && npm cache clean --force
 
 # Copy source code
 COPY services/user-service/src/ ./src/
