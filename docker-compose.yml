@@ -324,8 +324,8 @@ services:
   # Payment Service
   payment-service:
     build:
-      context: ./services/payment-service
-      dockerfile: ${DOCKERFILE:-Dockerfile}
+      context: .
+      dockerfile: services/payment-service/${DOCKERFILE:-Dockerfile}
     container_name: cab-booking-payment-service
     ports:
       - "3002:3002"

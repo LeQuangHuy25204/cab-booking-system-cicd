@@ -10,15 +10,18 @@ RUN apk add --no-cache \
     redis \
     && rm -rf /var/cache/apk/*
 
-# Copy package files
-COPY package.json ./
+# Copy shared dependency
+COPY shared/ /shared/
+
+# Copy package files from root context
+COPY services/payment-service/package.json ./
 
 # Install dependencies
 RUN npm install --omit=dev && npm cache clean --force
 
 # Copy source code
-COPY src/ ./src/
-COPY index.js ./
+COPY services/payment-service/src/ ./src/
+COPY services/payment-service/index.js ./
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
