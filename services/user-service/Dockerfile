@@ -10,15 +10,18 @@ RUN apk add --no-cache \
     redis \
     && rm -rf /var/cache/apk/*
 
-# Copy package files explicitly to ensure npm ci finds lockfile
-COPY package.json package-lock.json ./
+# Copy shared dependency
+COPY shared/ /shared/
+
+# Copy package files from root context
+COPY services/user-service/package.json services/user-service/package-lock.json ./
 
 # Install dependencies
 RUN npm ci --omit=dev && npm cache clean --force
 
 # Copy source code
-COPY src/ ./src/
-COPY index.js ./
+COPY services/user-service/src/ ./src/
+COPY services/user-service/index.js ./
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
