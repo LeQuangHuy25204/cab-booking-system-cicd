@@ -10,8 +10,8 @@ RUN apk add --no-cache \
     redis \
     && rm -rf /var/cache/apk/*
 
-# Copy package files
-COPY package*.json ./
+# Copy package files explicitly to ensure npm ci finds lockfile
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm ci --omit=dev && npm cache clean --force
