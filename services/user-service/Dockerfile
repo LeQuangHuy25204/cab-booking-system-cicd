@@ -10,14 +10,19 @@ RUN apk add --no-cache \
     redis \
     && rm -rf /var/cache/apk/*
 
-# Copy shared dependency
+# Copy shared dependency and install it first
 COPY shared/ /shared/
+WORKDIR /shared
+RUN npm install --omit=dev
+
+# Go back to app directory
+WORKDIR /app
 
 # Copy package files from root context
-COPY services/user-service/package.json services/user-service/package-lock.json ./
+COPY services/user-service/package.json ./
 
-# Install dependencies
-RUN npm install --omit=dev --force && npm cache clean --force
+# Install dependencies without lockfile
+RUN npm install --omit=dev && npm cache clean --force
 
 # Copy source code
 COPY services/user-service/src/ ./src/
