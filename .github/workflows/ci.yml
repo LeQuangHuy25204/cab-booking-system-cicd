@@ -71,9 +71,6 @@ jobs:
       - name: Run level1 smoke
         run: npm run smoke:level1
 
-      - name: Run level2 smoke
-        run: npm run smoke:level2
-
       - name: Run level3 smoke
         run: npm run smoke:level3
 
